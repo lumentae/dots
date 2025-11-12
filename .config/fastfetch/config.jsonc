@@ -1,8 +1,8 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
   "logo": {
-    "type": "auto",
-    "source": "",
+    "type": "kitty",
+    "source": "~/.config/fastfetch/image.webp",
     "color": {
       "1": "",
       "2": "",
@@ -14,8 +14,7 @@
       "8": "",
       "9": ""
     },
-    "width": null,
-    "height": null,
+    "width": 35,
     "padding": {
       "top": 0,
       "left": 0,
