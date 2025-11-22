@@ -27,4 +27,8 @@ end
 
 function fish_greeting
     fastfetch
+    if test -e /etc/environment.fish
+        source /etc/environment.fish
+    end
+    bash ~/dots/greet.sh $GEO_LATITUDE $GEO_LONGITUDE
 end
