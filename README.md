@@ -8,3 +8,4 @@
 - fish
 - fastfetch
 - kitty
+- jq (if using the weather function in the greet script)
