@@ -22,13 +22,18 @@ if status is-interactive # Commands to run in interactive sessions can go here
     alias ls 'eza --icons -lag'
     alias clear "printf '\033[2J\033[3J\033[1;1H'"
     alias q 'qs -c ii'
-    
+    if test -e /etc/environment.fish
+        source /etc/environment.fish
+    end
+    if not string match -q "*$PNPM_HOME*" $PATH
+        set -x PATH $PNPM_HOME $PATH
+    end
 end
 
 function fish_greeting
     fastfetch
-    if test -e /etc/environment.fish
-        source /etc/environment.fish
-    end
-    bash ~/dots/greet.sh $GEO_LATITUDE $GEO_LONGITUDE
+    bash ~/dots/scripts/greet.sh $GEO_LATITUDE $GEO_LONGITUDE
 end
+
+# Created by `pipx` on 2025-11-23 14:05:01
+set PATH $PATH /home/$USER/.local/bin
