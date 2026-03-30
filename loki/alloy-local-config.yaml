@@ -33,6 +33,11 @@ prometheus.scrape "default" {
   targets = [
     { __address__ = "192.168.2.2:9100", },
     { __address__ = "192.168.2.2:9221", __metrics_path__ = "/pve", },
+    { __address__ = "192.168.2.186:8096", },
+    { __address__ = "192.168.2.179:8081", },
+    { __address__ = "192.168.2.179:8082", },
+    { __address__ = "192.168.2.2:9594", },
+    { __address__ = "192.168.2.2:9042", },
   ]
 
   forward_to = [prometheus.remote_write.default.receiver]

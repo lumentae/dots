@@ -6,20 +6,22 @@ services:
     hostname: gluetun
     cap_add:
       - NET_ADMIN
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 1024
     devices:
       - /dev/net/tun:/dev/net/tun
     restart: always
     ports:
-      - 10025:6881
-      - 10026:8085 # qbittorrent
-      - 10027:9117 # Jackett
-      - 10028:8989 # Sonarr
-      - 10029:9696 # Prowlarr
-      - 10030:8096 # Jellyseer
-      - 10032:8000 # Gluetun web
-      - 10033:7878 # Radarr
-      - 10034:8191 # FlareSolverr
-      - 10036:8080 # SABnzbd
+      - "10025:6881"
+      - "10026:8085" # qbittorrent
+      - "10028:8989" # Sonarr
+      - "10029:9696" # Prowlarr
+      - "10030:8686" # Lidarr
+      - "10032:8000" # Gluetun web
+      - "10033:7878" # Radarr
+      - "10034:8191" # FlareSolverr
+      - "10035:6881" # qBittorrent torrenting
+      - "10036:8080" # SABnzbd
     volumes:
       - /root/gluetun:/gluetun
     environment:
@@ -51,6 +53,7 @@ services:
       - PGID=0
       - TZ=${TIMEZONE}
       - WEBUI_PORT=8085
+      - TORRENTING_PORT=6881
     volumes:
       - /root/qbittorrent:/config
       - /mnt/lvm/Downloads:/downloads
@@ -78,29 +81,6 @@ services:
       - /mnt/lvm/Downloads:/downloads
     restart: always
 
-  # Jackett
-  jackett:
-    image: lscr.io/linuxserver/jackett:latest
-    container_name: jackett-stack
-    network_mode: service:gluetun
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=${TIMEZONE}
-      - AUTO_UPDATE=true
-      - RUN_OPTS=
-    volumes:
-      - /root/data:/config
-      - /root/blackhole:/downloads
-    depends_on:
-      - gluetun
-    restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9117/"]
-      interval: 1m
-      timeout: 10s
-      retries: 3
-
   # Sonarr
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -123,44 +103,6 @@ services:
       timeout: 10s
       retries: 3
 
-  # prowlarr
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr-stack
-    network_mode: service:gluetun
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=${TIMEZONE}
-    volumes:
-      - /root/prowlarr/data:/config
-    depends_on:
-      - gluetun
-    restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9696"]
-      interval: 1m
-      timeout: 10s
-      retries: 3
-
-  # jellyseerr
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseer-stack
-    network_mode: service:gluetun
-    environment:
-      - LOG_LEVEL=debug
-      - TZ=${TIMEZONE}
-      - PORT=8096
-    volumes:
-      - /root/jellyseer/config:/app/config
-    restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8096"]
-      interval: 1m
-      timeout: 10s
-      retries: 3
-
   # Radarr
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -173,7 +115,6 @@ services:
     volumes:
       - /root/radarr/config:/config
       - /mnt/lvm/Downloads:/downloads
-      - /mnt/lvm/Anime:/multimedia/anime
       - /mnt/lvm/Series:/multimedia/serie
       - /mnt/lvm/Film:/multimedia/film
     depends_on:
@@ -181,6 +122,28 @@ services:
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:7878"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+
+  # Lidarr
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    network_mode: service:gluetun
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=${TIMEZONE}
+    volumes:
+      - /root/lidarr/config:/config
+      - /mnt/lvm/Downloads:/downloads
+      - /mnt/lvm/Music:/multimedia/music
+    depends_on:
+      - gluetun
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8686"]
       interval: 1m
       timeout: 10s
       retries: 3
@@ -204,4 +167,45 @@ services:
       timeout: 10s
       retries: 3
 
+  # Umami
+  umami:
+    image: ghcr.io/umami-software/umami:latest
+    container_name: umami
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://${UMAMI_USER}:${UMAMI_PASSWORD}@umami_db:5432/umami
+      APP_SECRET: ${UMAMI_APP_SECRET}
+    depends_on:
+      umami_db:
+        condition: service_healthy
+    init: true
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Postgres for Umami
+  umami_db:
+    image: postgres:15-alpine
+    container_name: umami_db
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: ${UMAMI_USER}
+      POSTGRES_PASSWORD: ${UMAMI_PASSWORD}
+    volumes:
+      - umami-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 networks: {}
+volumes:
+  umami-db-data:

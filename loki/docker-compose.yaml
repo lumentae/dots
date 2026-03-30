@@ -7,9 +7,9 @@ services:
     image: grafana/loki:latest
     command: "-config.file=/etc/loki/config.yaml -target=read"
     ports:
-      - 3101:3100
-      - 7946
-      - 9095
+      - "3101:3100"
+      - "7946"
+      - "9095"
     restart: always
     volumes:
       - ./loki-config.yaml:/etc/loki/config.yaml
@@ -30,9 +30,9 @@ services:
     image: grafana/loki:latest
     command: "-config.file=/etc/loki/config.yaml -target=write"
     ports:
-      - 3102:3100
-      - 7946
-      - 9095
+      - "3102:3100"
+      - "7946"
+      - "9095"
     restart: always
     volumes:
       - ./loki-config.yaml:/etc/loki/config.yaml
@@ -55,7 +55,7 @@ services:
     command:  run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
     privileged: true
     ports:
-      - 12345:12345
+      - "12345:12345"
     restart: always
     depends_on:
       - gateway
@@ -77,7 +77,7 @@ services:
       - MINIO_PROMETHEUS_AUTH_TYPE=public
       - MINIO_UPDATE=off
     ports:
-      - 9000
+      - "9000"
     restart: always
     volumes:
       - ./.data/minio:/data
@@ -230,7 +230,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--web.enable-remote-write-receiver'
     ports:
-      - 9090:9090
+      - "9090:9090"
     restart: always
     volumes:
       - ./prometheus:/etc/prometheus
@@ -242,7 +242,7 @@ services:
     container_name: influxdb3-core
     image: influxdb:3-core
     ports:
-      - 8181:8181
+      - "8181:8181"
     security_opt:
       - apparmor:unconfined
     command:
@@ -252,6 +252,7 @@ services:
       - --object-store=file
       - --data-dir=/var/lib/influxdb3/data
       - --plugin-dir=/var/lib/influxdb3/plugins
+      - --query-file-limit=10000
     volumes:
       - influxdb_data:/var/lib/influxdb3
     healthcheck:
@@ -260,6 +261,16 @@ services:
       timeout: 10s
       retries: 3
     restart: always
+
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    restart: always
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf  # Mount the Telegraf configuration file
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Mount the Docker socket to collect Docker metrics
+    ports:
+      - '8125:8125'  # Expose Telegraf's StatsD port
 
 volumes:
   prom_data:
