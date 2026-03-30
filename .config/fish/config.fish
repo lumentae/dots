@@ -18,10 +18,9 @@ if status is-interactive # Commands to run in interactive sessions can go here
     end
 
     # Aliases
-    alias pamcan pacman
     alias ls 'eza --icons -lag'
     alias clear "printf '\033[2J\033[3J\033[1;1H'"
-    alias q 'qs -c ii'
+    alias r 'sudo nixos-rebuild switch'
     if test -e /etc/environment.fish
         source /etc/environment.fish
     end
@@ -35,5 +34,13 @@ function fish_greeting
     bash ~/dots/scripts/greet.sh $GEO_LATITUDE $GEO_LONGITUDE
 end
 
-# Created by `pipx` on 2025-11-23 14:05:01
-set PATH $PATH /home/$USER/.local/bin
+# terminal-wakatime setup
+set -gx PATH "$HOME/.wakatime" $PATH
+terminal-wakatime init fish | source
+
+# pnpm
+set -gx PNPM_HOME "~/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
