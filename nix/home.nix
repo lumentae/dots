@@ -64,4 +64,20 @@
     gtk.enable = true;
     x11.enable = true;
   };
+
+  home.file = builtins.listToAttrs (
+    builtins.map (name: {
+      name = ".config/${name}";
+      value = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dots/.config/${name}";
+      };
+    }) [
+      "fastfetch"
+      "fish"
+      "hypr"
+      "kitty"
+      "nvim"
+      "quickshell"
+    ]
+  );
 }

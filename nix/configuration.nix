@@ -114,6 +114,7 @@
      kdePackages.qqc2-breeze-style
      kdePackages.kirigami
      kdePackages.kirigami-addons
+     kdePackages.plasma-nm
      
      kitty
      fastfetch
