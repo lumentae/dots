@@ -9,38 +9,35 @@ Item {
     property string color: "#000000"
     property string backgroundColor: "#aa000000"
 
-    // Safe enum-like values
     readonly property int posCenter: 0
     readonly property int posRight: 1
     readonly property int posLeft: 2
 
     property int position: posCenter
 
-    // Size follows content
-    width: background.width
-    height: background.height
+    implicitWidth: label.implicitWidth + 20
+    implicitHeight: 26
 
-    // 👉 Dynamic positioning (NO states needed)
+    width: implicitWidth
+    height: implicitHeight
+
     anchors.horizontalCenter: position === posCenter
         ? parent.horizontalCenter
         : undefined
 
-    anchors.verticalCenter: parent.verticalCenter
+    anchors.verticalCenter: parent ? parent.verticalCenter : undefined
 
     anchors.right: position === posRight ? parent.right : undefined
     anchors.left: position === posLeft ? parent.left : undefined
 
-    anchors.rightMargin: position === posRight ? 2 : 0
-    anchors.leftMargin: position === posLeft ? 2 : 0
+    anchors.rightMargin: position === posRight ? 4 : 0
+    anchors.leftMargin: position === posLeft ? 4 : 0
 
     Rectangle {
         id: background
-        anchors.centerIn: parent
+        anchors.fill: parent
         color: backgroundColor
         radius: 12
-
-        width: label.width + 20
-        height: label.height + 10
     }
 
     Text {

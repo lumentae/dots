@@ -152,6 +152,7 @@
     zstd
     glib
     gcc
+    libxkbcommon
   ];
 
   # List services that you want to enable:
