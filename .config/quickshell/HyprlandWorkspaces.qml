@@ -26,7 +26,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: height / 2
-        color: "#aa000000"
+        color: "#77000000"
         z: 0
         WheelHandler {
             onWheel: (event) => {
@@ -52,7 +52,7 @@ Item {
                 height: 20
                 background: Rectangle {
                     radius: width / 2
-                    color: effectiveActiveWorkspaceId !== model.index + 1 + 10 * workspaceGroup ? "#ff000000" : "#ffffff"
+                    color: effectiveActiveWorkspaceId !== model.index + 1 + 10 * workspaceGroup ? "#77000000" : "#ffffff"
                 }
                 Text {
                     anchors.centerIn: parent

@@ -7,7 +7,7 @@ Item {
 
     property string text: "Pill"
     property string color: "#000000"
-    property string backgroundColor: "#aa000000"
+    property string backgroundColor: "#77000000"
 
     readonly property int posCenter: 0
     readonly property int posRight: 1
