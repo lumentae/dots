@@ -96,46 +96,27 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim
-     wget
-     curl
-     killall
-     pulseaudio
-     crosspipe
+    btop
+    cifs-utils
+    crosspipe
+    curl
+    fastfetch
+    jq
+    killall
+    neovim
+    pulseaudio
+    starship
+    unzip
+    wget
 
-     wayland
-     wayland-utils
-     wl-clipboard
-
-     kdePackages.dolphin
-     kdePackages.breeze
-     kdePackages.breeze-icons
-     kdePackages.kde-gtk-config
-     kdePackages.qqc2-breeze-style
-     kdePackages.kirigami
-     kdePackages.kirigami-addons
-     kdePackages.plasma-nm
-     
-     kitty
-     fastfetch
-     hyprpaper
-     btop
-     jq
-     starship
-     bibata-cursors
-     quickshell
-     hyprlock
-     hyprshot
-     hyprpicker
-     unzip
-     wl-clipboard
-     cliphist
-     dmenu
-     playerctl
-     mako
-     libnotify
-     cifs-utils
-     flatpak-builder
+    kdePackages.breeze
+    kdePackages.breeze-icons
+    kdePackages.dolphin
+    kdePackages.kde-gtk-config
+    kdePackages.kirigami
+    kdePackages.kirigami-addons
+    kdePackages.plasma-nm
+    kdePackages.qqc2-breeze-style
   ];
   
   qt.enable = true;

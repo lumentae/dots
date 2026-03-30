@@ -46,15 +46,29 @@
     };
   };
 
-  home.packages = [
-    pkgs.vicinae
-    pkgs.code-cursor
-    pkgs.vesktop
-    pkgs.easyeffects
-    pkgs.jetbrains.idea
-    pkgs.pnpm
-    pkgs.eza
-    pkgs.jellyfin-rpc
+  home.packages = with pkgs; [
+    bibata-cursors
+    cliphist
+    code-cursor
+    easyeffects
+    eza
+    hyprlock
+    hyprpaper
+    hyprpicker
+    hyprshot
+    jellyfin-rpc
+    jetbrains.idea
+    kitty
+    libnotify
+    mako
+    playerctl
+    pnpm
+    quickshell
+    vesktop
+    vicinae
+    wayland
+    wayland-utils
+    wl-clipboard
   ];
 
   home.pointerCursor = {
