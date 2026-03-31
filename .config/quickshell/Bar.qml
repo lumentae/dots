@@ -28,6 +28,8 @@ Scope {
 
             HyprlandWorkspaces {}
 
+            Media {}
+
             Pill {
                 text: Clock.time;
                 color: "white";
