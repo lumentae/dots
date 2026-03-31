@@ -83,14 +83,11 @@
   nixpkgs.config.allowUnfree = true;
 
   services = {
-    desktopManager.plasma6.enable = true;
     displayManager.ly.enable = true;
   };
 
   environment.sessionVariables = {
     QT_QPA_PLATFORM = "wayland";
-    #QT_QPA_PLATFORMTHEME = "kde";
-    QT_STYLE_OVERRIDE = "Breeze-Dark";
   };
 
   # List packages installed in system profile. To search, run:
@@ -108,18 +105,8 @@
     starship
     unzip
     wget
-
-    kdePackages.breeze
-    kdePackages.breeze-icons
-    kdePackages.dolphin
-    kdePackages.kde-gtk-config
-    kdePackages.kirigami
-    kdePackages.kirigami-addons
-    kdePackages.plasma-nm
-    kdePackages.qqc2-breeze-style
   ];
-  
-  qt.enable = true;
+
   xdg.portal.extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -209,7 +196,7 @@
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
     powerManagement.finegrained = false;
 
-    # Use the NVidia open source kernel module (not to be confused with the
+    # Use the Nvidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
     # Support is limited to the Turing and later architectures. Full list of
     # supported GPUs is at:
@@ -218,32 +205,32 @@
     open = true;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+	  # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-
+  
   fileSystems."/mnt/windows" = {
     device = "/dev/disk/by-uuid/E54411BEDC8DB6BE";
     fsType = "ntfs3";
-    options = [
-      "rw"
-    ];
+    options = [ "rw" "nofail" ];
   };
+
   fileSystems."/mnt/server/root" = {
     device = "//192.168.2.2/root";
     fsType = "cifs";
     options = let
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in ["${automount_opts},credentials=/etc/smb-secrets"];
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,_netdev,nofail";
+    in [ "${automount_opts},credentials=/etc/smb-secrets" ];
   };
+
   fileSystems."/mnt/server/lvm" = {
     device = "//192.168.2.2/lvm";
     fsType = "cifs";
     options = let
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in ["${automount_opts},credentials=/etc/smb-secrets"];
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,_netdev,nofail";
+    in [ "${automount_opts},credentials=/etc/smb-secrets" ];
   };
 }

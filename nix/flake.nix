@@ -26,6 +26,7 @@
         modules = [
           /etc/nixos/hardware-configuration.nix
           ./configuration.nix
+          ./services
           home-manager.nixosModules.default
           {
             home-manager = {
