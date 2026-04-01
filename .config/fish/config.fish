@@ -18,9 +18,7 @@ if status is-interactive # Commands to run in interactive sessions can go here
     end
 
     # Aliases
-    alias ls 'eza --icons -lag'
-    alias clear "printf '\033[2J\033[3J\033[1;1H'"
-    alias r 'sudo nixos-rebuild switch --flake /home/lumentae/dots/nix#lumentae-nixos --impure'
+    source ~/.config/fish/aliases.fish
     if test -e /etc/environment.fish
         source /etc/environment.fish
     end
