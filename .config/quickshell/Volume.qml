@@ -16,8 +16,8 @@ Scope {
         target: Pipewire.defaultAudioSink.audio
 
         function onVolumeChanged() {
-            volume.shouldShowOsd = true;
-            hideTimer.restart();
+            volume.shouldShowOsd = true
+            hideTimer.restart()
         }
     }
 

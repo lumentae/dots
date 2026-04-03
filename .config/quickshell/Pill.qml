@@ -8,6 +8,7 @@ Item {
     property string text: "Pill"
     property string color: "#000000"
     property string backgroundColor: "#77000000"
+    default property alias content: prefix.data
 
     readonly property int posCenter: 0
     readonly property int posRight: 1
@@ -15,7 +16,7 @@ Item {
 
     property int position: posCenter
 
-    implicitWidth: label.implicitWidth + 20
+    implicitWidth: layout.implicitWidth + 20
     implicitHeight: 26
 
     width: implicitWidth
@@ -40,10 +41,22 @@ Item {
         radius: 12
     }
 
-    Text {
-        id: label
+    Row {
+        id: layout
         anchors.centerIn: parent
-        text: root.text
-        color: root.color
+        spacing: prefix.implicitWidth > 0 ? 6 : 0
+
+        Row {
+            id: prefix
+            spacing: 4
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Text {
+            id: label
+            text: root.text
+            color: root.color
+            anchors.verticalCenter: parent.verticalCenter
+        }
     }
 }

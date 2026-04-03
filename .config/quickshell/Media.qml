@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Io
@@ -12,6 +13,28 @@ Item {
 
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.verticalCenter: parent.verticalCenter
+
+    RowLayout {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        Pill {
+            id: pill
+            text: `${mediaText}`
+            color: "white"
+            position: posCenter;
+            Item {
+                implicitWidth: childrenRect.width
+                implicitHeight: childrenRect.height
+                IconImage {
+                    implicitSize: 20
+                    // noinspection UnnecessaryLabelJS
+                    source: (mediaClass === "stopped" || mediaClass === "paused")
+                        ? Quickshell.iconPath("media-playback-pause")
+                        : Quickshell.iconPath("media-playback-playing")
+                }
+            }
+        }
+    }
 
     Process {
         id: mediaProc
@@ -30,7 +53,8 @@ Item {
     }
 
     Timer {
-        interval: 1500
+        id: mediaTimer
+        interval: 500
         running: true
         repeat: true
         triggeredOnStart: true
@@ -39,10 +63,10 @@ Item {
         }
     }
 
-    Pill {
-        id: pill
-        text: `${mediaText}`
-        color: "white"
-        position: posCenter;
+    IpcHandler {
+        target: "media"
+        function updateState() {
+            mediaTimer.restart()
+        }
     }
 }

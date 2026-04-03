@@ -9,27 +9,24 @@ Scope {
     id: root
 
     Variants {
-        model: Quickshell.screens;
+        model: Quickshell.screens
 
         PanelWindow {
-            required property var modelData;
-            screen: modelData;
+            required property var modelData
+            screen: modelData
 
             anchors {
-                top: true;
-                left: true;
-                right: true;
+                top: true
+                left: true
+                right: true
             }
 
-            implicitHeight: 30;
-            color: "transparent";
+            implicitHeight: 30
+            color: "transparent"
 
             Volume {}
-
             HyprlandWorkspaces {}
-
             Media {}
-
             Pill {
                 text: Clock.time;
                 color: "white";
