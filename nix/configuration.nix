@@ -98,7 +98,7 @@
     crosspipe
     curl
     fastfetch
-    libgcc
+    gcc
     jq
     killall
     neovim
