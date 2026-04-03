@@ -98,9 +98,11 @@
     crosspipe
     curl
     fastfetch
+    libgcc
     jq
     killall
     neovim
+    ntfs3g
     pulseaudio
     starship
     unzip
@@ -214,8 +216,8 @@
   
   fileSystems."/mnt/windows" = {
     device = "/dev/disk/by-uuid/E54411BEDC8DB6BE";
-    fsType = "ntfs3";
-    options = [ "rw" "nofail" ];
+    fsType = "ntfs-3g";
+    options = [ "uid=1000" "gid=1000" "rw" "umask=022" "nofail" ];
   };
 
   fileSystems."/mnt/server/root" = {

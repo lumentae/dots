@@ -57,19 +57,22 @@
     hyprpicker
     hyprshot
     jellyfin-rpc
+    jetbrains.clion
     jetbrains.idea
     kitty
     libnotify
     mako
+    mangohud
+    material-symbols
     playerctl
     pnpm
     quickshell
+    uv
     vesktop
     vicinae
     wayland
     wayland-utils
     wl-clipboard
-    material-symbols
   ];
 
   home.pointerCursor = {
