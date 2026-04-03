@@ -19,17 +19,13 @@ if status is-interactive # Commands to run in interactive sessions can go here
 
     # Aliases
     source ~/.config/fish/aliases.fish
+    source ~/.config/fish/functions.fish
     if test -e /etc/environment.fish
         source /etc/environment.fish
     end
     if not string match -q "*$PNPM_HOME*" $PATH
         set -x PATH $PNPM_HOME $PATH
     end
-end
-
-function fish_greeting
-    fastfetch
-    bash ~/dots/scripts/greet.sh $GEO_LATITUDE $GEO_LONGITUDE
 end
 
 # terminal-wakatime setup
