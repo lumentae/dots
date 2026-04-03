@@ -13,6 +13,18 @@ Item {
     property real mediaPosition: 0
     property real mediaLength: 0
 
+    Timer {
+        id: smoothTimer
+        interval: 100
+        running: mediaClass === "playing"
+        repeat: true
+        onTriggered: {
+            if (mediaPosition < mediaLength) {
+                mediaPosition = Math.min(mediaLength, mediaPosition + 0.1);
+            }
+        }
+    }
+
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.verticalCenter: parent.verticalCenter
 
@@ -61,7 +73,7 @@ Item {
                             centerX: 10; centerY: 10
                             radiusX: 9; radiusY: 9
                             startAngle: -90
-                            sweepAngle: (mediaLength > 0) ? (mediaPosition / mediaLength * 360) : 0
+                            sweepAngle: (mediaLength > 0) ? Math.min(360, Math.max(0, (mediaPosition / mediaLength * 360))) : 0
                         }
                     }
                 }
@@ -72,6 +84,21 @@ Item {
                     color: "white"
                 }
             }
+        }
+        TapHandler {
+            acceptedButtons: Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton
+            onTapped: (eventPoint, button) => {
+                if (button === Qt.MiddleButton) {
+                    playPauseProc.exec(["playerctl", "play-pause"])
+                } else if (button === Qt.BackButton) {
+                    playPauseProc.exec(["playerctl", "previous"])
+                } else if (button === Qt.ForwardButton) {
+                    playPauseProc.exec(["playerctl", "next"])
+                }
+            }
+        }
+        Process {
+            id: playPauseProc
         }
     }
 
@@ -104,8 +131,10 @@ Item {
                         if (text.endsWith(" - ")) text = text.substring(0, text.length - 3)
                         media.mediaText = text.length > 100 ? text.substring(0, 97) + "..." : text
                     }
-                    media.mediaPosition = (parseInt(parts[2]) / 1000000) || 0
-                    media.mediaLength = (parseInt(parts[3]) / 1000000) || 0
+                    const pos = (parseInt(parts[2]) / 1000000) || 0
+                    const len = (parseInt(parts[3]) / 1000000) || 0
+                    media.mediaPosition = Math.min(pos, len)
+                    media.mediaLength = len
                 }
             }
         }
