@@ -13,18 +13,6 @@ Item {
     property real mediaPosition: 0
     property real mediaLength: 0
 
-    Timer {
-        id: smoothTimer
-        interval: 100
-        running: mediaClass === "playing"
-        repeat: true
-        onTriggered: {
-            if (mediaPosition < mediaLength) {
-                mediaPosition = Math.min(mediaLength, mediaPosition + 0.1);
-            }
-        }
-    }
-
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.verticalCenter: parent.verticalCenter
 
@@ -36,6 +24,7 @@ Item {
             text: `${mediaText}`
             color: "white"
             position: posCenter;
+            iconVisible: mediaClass === "playing" || mediaClass === "paused"
             Item {
                 implicitWidth: 20
                 implicitHeight: 20
