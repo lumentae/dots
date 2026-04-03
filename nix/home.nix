@@ -69,6 +69,7 @@
     wayland
     wayland-utils
     wl-clipboard
+    material-symbols
   ];
 
   home.pointerCursor = {

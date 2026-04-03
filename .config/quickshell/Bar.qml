@@ -21,7 +21,7 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 30
+            implicitHeight: Resources.barHeight
             color: "transparent"
 
             Volume {}

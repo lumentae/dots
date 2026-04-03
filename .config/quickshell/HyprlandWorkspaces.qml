@@ -48,8 +48,8 @@ Item {
         Repeater {
             model: 10
             Button {
-                width: 20
-                height: 20
+                width: Resources.barHeight - 10
+                height: Resources.barHeight - 10
                 background: Rectangle {
                     radius: width / 2
                     color: effectiveActiveWorkspaceId !== model.index + 1 + 10 * workspaceGroup ? "#77000000" : "#ffffff"

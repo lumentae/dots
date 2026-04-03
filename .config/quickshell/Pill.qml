@@ -5,9 +5,11 @@ import QtQuick;
 Item {
     id: root
 
-    property string text: "Pill"
+    property string text: ""
     property string color: "#000000"
     property string backgroundColor: "#77000000"
+    property bool iconVisible: true
+    visible: text !== "" || iconVisible
     default property alias content: prefix.data
 
     readonly property int posCenter: 0
@@ -16,8 +18,8 @@ Item {
 
     property int position: posCenter
 
-    implicitWidth: layout.implicitWidth + 20
-    implicitHeight: 26
+    implicitWidth: visible ? layout.implicitWidth + 20 : 0
+    implicitHeight: visible ? Resources.barHeight - 4 : 0
 
     width: implicitWidth
     height: implicitHeight
@@ -50,6 +52,7 @@ Item {
             id: prefix
             spacing: 4
             anchors.verticalCenter: parent.verticalCenter
+            visible: iconVisible
         }
 
         Text {
