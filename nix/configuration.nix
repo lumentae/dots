@@ -70,11 +70,13 @@
     noto-fonts-color-emoji
   ];
 
+  users.groups.plugdev = {};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lumentae = {
     isNormalUser = true;
     description = "lumentae";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "tty" "input" "plugdev" ];
     packages = with pkgs; [];
     shell = pkgs.fish;
   };
@@ -107,6 +109,7 @@
     starship
     unzip
     wget
+    usbutils
   ];
 
   xdg.portal.extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
@@ -160,6 +163,11 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.udev.packages = with pkgs; [
+    arduino
+    platformio-core
+  ];
+  services.udev.extraRules = builtins.readFile "${pkgs.platformio-core}/lib/python3.13/site-packages/platformio/assets/system/99-platformio-udev.rules";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
