@@ -18,11 +18,11 @@ if status is-interactive # Commands to run in interactive sessions can go here
     end
 
     # Aliases
-    source ~/.config/fish/aliases.fish
-    source ~/.config/fish/functions.fish
     if test -e /etc/environment.fish
         source /etc/environment.fish
     end
+    source ~/.config/fish/aliases.fish
+    source ~/.config/fish/functions.fish
     if not string match -q "*$PNPM_HOME*" $PATH
         set -x PATH $PNPM_HOME $PATH
     end

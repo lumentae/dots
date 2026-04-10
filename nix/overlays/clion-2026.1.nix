@@ -4,8 +4,11 @@ final: prev: {
       version = "2026.1";
       src = prev.fetchurl {
         url = "https://download-cdn.jetbrains.com/cpp/CLion-2026.1.tar.gz";
-        hash = "sha256-0790kj32lpfhj59hppm9cmqp3g1ck1jp1ndfy842js5sddiyb5xg";
+        hash = "sha256-r5flY2u6aCkI8q7ZcGWYLLxxcWWp3gtTkdBdKoacIB0=";
       };
+      buildInputs = (old.buildInputs or []) ++ [
+        prev.openssl_1_1
+      ];
     });
   };
 }

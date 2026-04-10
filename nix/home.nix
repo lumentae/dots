@@ -1,10 +1,26 @@
 { config, pkgs, inputs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
+
+  targets.genericLinux = {
+    enable = true;
+    gpu.nvidia = {
+      enable = true;
+      version = "595.58.03";
+      sha256 = "sha256-jA1Plnt5MsSrVxQnKu6BAzkrCnAskq+lVRdtNiBYKfk=";
+    };
+  };
+
+  home.username = "lumentae";
+  home.homeDirectory = "/home/lumentae";
+
   home.stateVersion = "25.11";
 
   imports = [
     inputs.zen-browser.homeModules.twilight
+    (import ./overlays/default.nix)
   ];
 
   programs.zen-browser = {
@@ -46,20 +62,22 @@
     };
   };
 
+  programs.home-manager.enable = true;
+
   home.packages = with pkgs; [
     bibata-cursors
     cliphist
     code-cursor
     easyeffects
     eza
-    hyprlock
+    fastfetch
     hyprpaper
     hyprpicker
     hyprshot
     jellyfin-rpc
     jetbrains.clion
     jetbrains.idea
-    kitty
+    jq
     libnotify
     mako
     mangohud
@@ -67,9 +85,9 @@
     playerctl
     pnpm
     quickshell
+    starship
     uv
     vesktop
-    vicinae
     wayland
     wayland-utils
     wl-clipboard
@@ -88,12 +106,14 @@
       name = ".config/${name}";
       value = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dots/.config/${name}";
+        force = true;
       };
     }) [
       "fastfetch"
       "fish"
       "hypr"
       "kitty"
+      "mako"
       "nvim"
       "quickshell"
     ]

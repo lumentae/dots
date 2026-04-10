@@ -12,6 +12,9 @@ DEBUG=false
 ### DON'T modify me ###
 echo -e "Hello \e[1;32m$(whoami)\e[0m!, it is currently \e[1;32m$(date '+%H:%M:%S %Z\e[0m on \e[1;32m%A, %B %d, %Y.\e[0m')"
 if $ENABLE_WEATHER; then
+    if $DEBUG; then
+        echo "DEBUG: $LATITUDE $LONGITUDE"
+    fi
     if [[ -f "$CACHE_FILE" ]]; then
         now=$(date +%s)
         modified=$(stat -c %Y "$CACHE_FILE")
