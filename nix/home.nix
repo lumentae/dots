@@ -66,6 +66,7 @@
 
   home.packages = with pkgs; [
     bibata-cursors
+    btop
     cliphist
     code-cursor
     easyeffects
@@ -82,15 +83,19 @@
     mako
     mangohud
     material-symbols
+    neovim
     playerctl
     pnpm
     quickshell
     starship
+    unzip
+    usbutils
     uv
     vesktop
     wayland
     wayland-utils
     wl-clipboard
+    zip
   ];
 
   home.pointerCursor = {
