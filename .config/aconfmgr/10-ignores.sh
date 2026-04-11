@@ -1,0 +1,9 @@
+IgnorePath /etc/ca-certificates
+IgnorePath /etc/ssl
+IgnorePath /usr/share/mime
+IgnorePath /var/lib/pacman/local
+IgnorePath /var/lib/flatpak
+IgnorePath /var/log
+IgnorePath /nix
+IgnorePath /boot
+IgnorePath /etc/environment*

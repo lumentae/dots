@@ -96,7 +96,12 @@
     wayland-utils
     wl-clipboard
     zip
+    kitty
+
+    cascadia-code
   ];
+
+  fonts.fontconfig.enable = true;
 
   home.pointerCursor = {
     name = "Bibata-Modern-Classic";
@@ -114,6 +119,7 @@
         force = true;
       };
     }) [
+      "aconfmgr"
       "fastfetch"
       "fish"
       "hypr"
