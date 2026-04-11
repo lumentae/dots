@@ -1,0 +1,11 @@
+background-color=#00000099
+border-color=#F7DCDE39
+border-radius=8
+default-timeout=10000
+format=<b>%s</b>\n%b\n<i>%a</i>
+
+[app-name="com.github.th_ch.youtube_music"]
+format=<b>%s</b>\n%b\n<i>Youtube Music</i>
+
+[grouped]
+format=<b>%a</b>\n(%g) %s\n%b
