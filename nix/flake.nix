@@ -12,6 +12,7 @@
         home-manager.follows = "home-manager";
       };
     };
+    linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine";
   };
   outputs =
     {

@@ -62,6 +62,19 @@
     };
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
+    ];
+    config = {
+      hyprland = {
+        default = [ "hyprland" "gtk" ];
+      };
+    };
+  };
+
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
@@ -75,11 +88,13 @@
     hyprpaper
     hyprpicker
     hyprshot
+    iperf
     jellyfin-rpc
     jetbrains.clion
     jetbrains.idea
     jq
     libnotify
+    linux-wallpaperengine
     mako
     mangohud
     material-symbols
@@ -91,7 +106,7 @@
     unzip
     usbutils
     uv
-    vesktop
+    vlc
     wayland
     wayland-utils
     wl-clipboard
@@ -99,6 +114,8 @@
     kitty
 
     cascadia-code
+    
+    inputs.linux-wallpaper-engine.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   fonts.fontconfig.enable = true;
