@@ -98,6 +98,7 @@
     mako
     mangohud
     material-symbols
+    moonlight-qt
     neovim
     playerctl
     pnpm
