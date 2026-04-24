@@ -94,7 +94,6 @@
     jetbrains.idea
     jq
     libnotify
-    linux-wallpaperengine
     mako
     mangohud
     material-symbols
