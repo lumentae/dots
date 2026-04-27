@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
@@ -9,34 +11,45 @@ import Quickshell.Widgets
 Scope {
     id: root
 
-    property bool shouldShowOsd: false
+    signal requestClose
+    property bool overlayVisible: false
 
     LazyLoader {
         active: true
 
-        PanelWindow {
-            // Since the panel's screen is unset, it will be picked by the compositor
-            // when the window is created. Most compositors pick the current active monitor.
+        Variants {
+            model: Quickshell.screens
 
-            anchors {
-                top: true
-                bottom: true
-                left: true
-                right: true
-            }
-            
-            exclusiveZone: 0
+            PanelWindow {
+                required property var modelData
+                screen: modelData
 
-            implicitWidth: 400
-            implicitHeight: 50
-            color: "transparent"
+                anchors {
+                    top: true
+                    bottom: true
+                    left: true
+                    right: true
+                }
 
-            // An empty click mask prevents the window from blocking mouse events.
-            mask: Region {}
+                exclusiveZone: 0
 
-            Rectangle {
-                anchors.fill: parent
-                color: "#40000000"
+                implicitWidth: screen?.width ?? 1
+                implicitHeight: screen?.height ?? 1
+                color: "transparent"
+                visible: root.overlayVisible
+                focusable: true
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#40000000"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: root.requestClose()
+                    }
+                }
+
+                Keys.onEscapePressed: root.requestClose()
             }
         }
     }

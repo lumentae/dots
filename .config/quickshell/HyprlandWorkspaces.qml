@@ -26,7 +26,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: height / 2
-        color: "#77000000"
+        color: "#00000000"
         z: 0
         WheelHandler {
             onWheel: (event) => {
@@ -42,24 +42,46 @@ Item {
     Row {
         id: workspaceRow
         anchors.centerIn: parent
-        spacing: 8
+        spacing: 4
         z: 1
 
         Repeater {
             model: 10
             Button {
-                width: Resources.barHeight - 10
-                height: Resources.barHeight - 10
+                id: workspaceButton
+                property var realIndex: (model.index + 1 + 10 * root.workspaceGroup)
+                property bool isSelected: (root.effectiveActiveWorkspaceId === realIndex)
+                width: isSelected ? (Resources.barHeight + 4) : (Resources.barHeight - 8)
+                height: Resources.barHeight - 8
                 background: Rectangle {
-                    radius: width / 2
-                    color: effectiveActiveWorkspaceId !== model.index + 1 + 10 * workspaceGroup ? "#77000000" : "#ffffff"
+                    color: workspaceButton.isSelected ? "#ffffff" : "#77000000"
+                    radius: width / 4
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                            easing.type: Easing.OutCubic
+                        }
+                    }
                 }
                 Text {
                     anchors.centerIn: parent
-                    text: model.index + 1 + 10 * workspaceGroup
-                    color: effectiveActiveWorkspaceId !== model.index + 1 + 10 * workspaceGroup ? "#ffffff" : "#000000"
+                    text: workspaceButton.realIndex
+                    color: workspaceButton.isSelected ? "#000000" : "#ffffff"
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 180
+                            easing.type: Easing.OutCubic
+                        }
+                    }
                 }
-                onClicked: Hyprland.dispatch(`workspace ${model.index + 1 + 10 * workspaceGroup}`)
+                onClicked: Hyprland.dispatch(`workspace ${workspaceButton.realIndex}`)
+                Behavior on width {
+                    NumberAnimation {
+                        duration: 500
+                        easing.type: Easing.OutBack
+                        easing.overshoot: 1.4
+                    }
+                }
             }
         }
     }
