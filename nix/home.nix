@@ -80,6 +80,7 @@
   home.packages = with pkgs; [
     bibata-cursors
     btop
+    cascadia-code
     cliphist
     code-cursor
     easyeffects
@@ -93,6 +94,7 @@
     jetbrains.clion
     jetbrains.idea
     jq
+    kitty
     libnotify
     mako
     mangohud
@@ -111,11 +113,6 @@
     wayland-utils
     wl-clipboard
     zip
-    kitty
-
-    cascadia-code
-    
-    inputs.linux-wallpaper-engine.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   fonts.fontconfig.enable = true;
