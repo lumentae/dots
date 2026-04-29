@@ -86,6 +86,7 @@
     easyeffects
     eza
     fastfetch
+    kdePackages.gwenview
     hyprpaper
     hyprpicker
     hyprshot
