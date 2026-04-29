@@ -15,41 +15,71 @@ Scope {
     property bool overlayVisible: false
 
     LazyLoader {
-        active: true
+        active: root.overlayVisible
 
-        Variants {
-            model: Quickshell.screens
+        PanelWindow {
+            anchors {
+                top: true
+                bottom: true
+                left: true
+                right: true
+            }
 
-            PanelWindow {
-                required property var modelData
-                screen: modelData
+            exclusiveZone: 0
 
-                anchors {
-                    top: true
-                    bottom: true
-                    left: true
-                    right: true
-                }
+            implicitWidth: screen?.width ?? 1
+            implicitHeight: screen?.height ?? 1
+            color: "transparent"
+            visible: true
+            focusable: true
 
-                exclusiveZone: 0
+            Rectangle {
+                anchors.fill: parent
+                color: "#40000000"
 
-                implicitWidth: screen?.width ?? 1
-                implicitHeight: screen?.height ?? 1
-                color: "transparent"
-                visible: root.overlayVisible
-                focusable: true
-
-                Rectangle {
+                MouseArea {
                     anchors.fill: parent
-                    color: "#40000000"
+                    onClicked: root.requestClose()
+                }
+            }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: root.requestClose()
+            Keys.onEscapePressed: root.requestClose()
+            Rectangle {
+                id: floatingWindow
+                width: 420
+                height: 260
+                radius: 12
+                color: "#1e1e2e"
+                border.color: "#45475a"
+                z: 10
+                x: (parent.width - width) / 2
+                y: (parent.height - height) / 2
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: function(mouse) {
+                        mouse.accepted = true
                     }
                 }
 
-                Keys.onEscapePressed: root.requestClose()
+                // draggable title bar
+                Rectangle {
+                    id: titleBar
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    height: 36
+                    color: "#313244"
+                    radius: parent.radius
+                    MouseArea {
+                        anchors.fill: parent
+                        drag.target: floatingWindow
+                        drag.minimumX: 0
+                        drag.minimumY: 0
+                        drag.maximumX: floatingWindow.parent.width - floatingWindow.width
+                        drag.maximumY: floatingWindow.parent.height - floatingWindow.height
+                        cursorShape: Qt.SizeAllCursor
+                    }
+                }
             }
         }
     }
