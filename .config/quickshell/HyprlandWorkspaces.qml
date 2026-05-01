@@ -74,7 +74,7 @@ Item {
                         }
                     }
                 }
-                onClicked: Hyprland.dispatch(`workspace ${workspaceButton.realIndex}`)
+                onClicked: Hyprland.dispatch(`hl.dsp.focus({ workspace = ${workspaceButton.realIndex} })`)
                 Behavior on width {
                     NumberAnimation {
                         duration: 500
