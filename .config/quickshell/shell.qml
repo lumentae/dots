@@ -19,7 +19,7 @@ Scope {
     Loader {
         id: overlayLoader
         active: true
-        source: "windows/overlay.qml"
+        source: "windows/overlay/overlay.qml"
 
         onLoaded: root.setOverlayVisible(root.overlayVisible)
     }

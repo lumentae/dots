@@ -14,7 +14,7 @@
 - jq (when using the weather function in the greet script)
 
 # TODO
-- [ ] Wallpaper selector
-- [ ] Volume control and mixer
+- [x] Wallpaper selector
+- [x] Volume control and mixer
 - [ ] More widgets in the top bar
 - [ ] Use Quickshell as a notification daemon
