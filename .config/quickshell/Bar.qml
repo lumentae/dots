@@ -22,7 +22,7 @@ Scope {
             }
 
             implicitHeight: Resources.barHeight
-            color: "#AA000000"
+            color: "#7F000000"
 
             Volume {}
             HyprlandWorkspaces {}

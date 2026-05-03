@@ -14,6 +14,7 @@ function updatePearDesktop
 end
 
 function updateNvidiaDrivers
+    # TODO: Skip update if version is up to date
     nvidia-smi | string match -r "Driver Version: (?<major>\d+)\.(?<minor>\d+)\.(?<revision>\d+)" > nul
     echo "Updating to $major.$minor.$revision"
     set hash (nix store prefetch-file https://download.nvidia.com/XFree86/Linux-x86_64/$major.$minor.$revision/NVIDIA-Linux-x86_64-$major.$minor.$revision.run 2>&1 | grep -o 'sha256-[A-Za-z0-9+/=]*')
