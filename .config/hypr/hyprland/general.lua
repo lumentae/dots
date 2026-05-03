@@ -25,7 +25,7 @@
 hl.config({
     general = {
         gaps_in  = 4,
-        gaps_out = { 1, 5, 5, 5 },
+        gaps_out = { top = 4, left = 4, right = 4, bottom = 4 },
 
         border_size = 2,
 
@@ -48,8 +48,8 @@ hl.config({
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
-        active_opacity   = 1.0,
-        inactive_opacity = 1.0,
+        active_opacity   = 0.9,
+        inactive_opacity = 0.9,
 
         shadow = {
             enabled      = true,
@@ -147,37 +147,4 @@ hl.config({
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
     },
-})
-
-
----------------
----- INPUT ----
----------------
-
-hl.config({
-    input = {
-        kb_layout  = "de",
-        kb_variant = "",
-        kb_model   = "",
-        kb_options = "",
-        kb_rules   = "",
-
-        follow_mouse = 1,
-
-        sensitivity = -.85,
-        accel_profile = "flat",
-
-        touchpad = {
-            natural_scroll = false,
-        },
-    },
-    binds = {
-        scroll_event_delay = 0,
-    },
-})
-
-hl.gesture({
-    fingers = 3,
-    direction = "horizontal",
-    action = "workspace"
 })
