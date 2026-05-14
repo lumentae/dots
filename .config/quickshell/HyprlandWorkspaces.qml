@@ -10,7 +10,7 @@ Item {
     id: root
     readonly property HyprlandMonitor monitor: Hyprland.monitorFor(root.QsWindow?.window?.screen)
     readonly property int effectiveActiveWorkspaceId: monitor?.activeWorkspace?.id ?? 1
-    property int horizontalPadding: 8
+    property int horizontalPadding: 1
     property int verticalPadding: 3
     property int workspaceGroup: Math.ceil(effectiveActiveWorkspaceId / 10) - 1
 
