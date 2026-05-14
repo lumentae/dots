@@ -3,7 +3,6 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
-import Quickshell.Widgets
 
 Scope {
     id: volume
@@ -52,19 +51,12 @@ Scope {
             Rectangle {
                 anchors.fill: parent
                 radius: height / 2
-                color: "#40000000"
+                color: "transparent"
 
                 RowLayout {
                     anchors {
                         fill: parent
-                        leftMargin: 10
                         rightMargin: 15
-                    }
-
-                    IconImage {
-                        implicitSize: 30
-                        // noinspection UnnecessaryLabelJS
-                        source: Quickshell.iconPath("audio-volume-high-symbolic")
                     }
 
                     Rectangle {
