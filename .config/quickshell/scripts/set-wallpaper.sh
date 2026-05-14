@@ -2,6 +2,8 @@
 path=$(/usr/sbin/zenity --file-selection --filename="$HOME/wallpapers/") || exit 0
 [[ -z "$path" ]] && exit 0
 
+matugen image "$path" -t scheme-content --prefer lightness
+
 hyprctl hyprpaper wallpaper ",$path,"
 cat > ~/.config/hypr/hyprpaper.conf << EOF
 wallpaper {

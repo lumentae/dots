@@ -1,4 +1,5 @@
 require("hyprland.binds")
+require("hyprland.colors")
 require("hyprland.env")
 require("hyprland.execs")
 require("hyprland.general")

@@ -95,7 +95,6 @@
     jetbrains.clion
     jetbrains.idea
     jq
-    kitty
     libnotify
     mako
     mangohud
@@ -104,7 +103,6 @@
     neovim
     playerctl
     pnpm
-    quickshell
     starship
     unzip
     usbutils
@@ -135,11 +133,13 @@
       };
     }) [
       "aconfmgr"
+      "cava"
       "fastfetch"
       "fish"
       "hypr"
       "kitty"
       "mako"
+      "matugen"
       "nvim"
       "quickshell"
     ]
