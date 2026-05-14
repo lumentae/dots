@@ -4,7 +4,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("dolphin"))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("XDG_MENU_PREFIX=arch- kbuildsycoca6 && dolphin"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("qs -p ~/.config/quickshell/windows/settings.qml"))
 hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("qs ipc call overlay toggle"))
