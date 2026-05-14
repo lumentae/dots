@@ -57,6 +57,7 @@ Scope {
                     anchors {
                         fill: parent
                         rightMargin: 15
+                        leftMargin: 15
                     }
 
                     Rectangle {
