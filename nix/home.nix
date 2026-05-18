@@ -23,10 +23,10 @@
     (import ./overlays/default.nix)
   ];
 
-  programs.zen-browser = {
-    enable = true;
-    setAsDefaultBrowser = true;
-  };
+  #programs.zen-browser = {
+    #enable = true;
+    #setAsDefaultBrowser = true;
+  #};
 
   programs.obs-studio = {
     enable = true;
