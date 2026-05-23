@@ -9,7 +9,9 @@ set COOKIE        "firefox:/home/lumentae/.zen/r2493afd.Default User/"
 
 set PLAYLISTS \
     "https://www.youtube.com/playlist?list=LM" \
-    "https://www.youtube.com/playlist?list=PL-GgbkABINgXHrEwEdLxUGu7Qx3lStaVQ"
+    "https://www.youtube.com/playlist?list=PL-GgbkABINgXHrEwEdLxUGu7Qx3lStaVQ" \
+    "https://www.youtube.com/playlist?list=PL-GgbkABINgWT14SsTvYDpK_OB6cWXb_v" \
+    "https://www.youtube.com/playlist?list=PL-GgbkABINgXMYYrt9fb2-Ksi4INfhASd"
 
 # setup
 mkdir -p "$MUSIC_DIR"
