@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### Modify me ###
-ENABLE_WEATHER=true
+ENABLE_WEATHER=false
 LATITUDE=$1
 LONGITUDE=$2
 
