@@ -168,9 +168,8 @@
   services.openssh.enable = true;
   services.udev.packages = with pkgs; [
     arduino
-    platformio-core
   ];
-  services.udev.extraRules = builtins.readFile "${pkgs.platformio-core}/lib/python3.13/site-packages/platformio/assets/system/99-platformio-udev.rules";
+  #services.udev.extraRules = builtins.readFile "${pkgs.platformio-core}/lib/python3.13/site-packages/platformio/assets/system/99-platformio-udev.rules";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
