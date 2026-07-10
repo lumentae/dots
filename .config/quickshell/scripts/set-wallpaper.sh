@@ -11,3 +11,5 @@ wallpaper {
     path = $path
 }
 EOF
+unlink ~/.config/hypr/wallpaper
+ln -s "$path" ~/.config/hypr/wallpaper
