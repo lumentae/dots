@@ -2,6 +2,7 @@
 
 # config
 set MUSIC_DIR     "$HOME/Music/YoutubeMusic"
+set MUSIC_DIR_MP3 "$MUSIC_DIR/../YoutubeMusicMP3"
 set ARCHIVE       "$MUSIC_DIR/downloaded.txt"
 set NAVIDROME_DIR "/mnt/server/root/container/113/opt/navidrome/music/"
 set GTA_DIR       "$HOME/.steam/steam/steamapps/compatdata/3240220/pfx/drive_c/users/steamuser/Documents/Rockstar Games/GTAV Enhanced/User Music/"
@@ -15,6 +16,7 @@ set PLAYLISTS \
 
 # setup
 mkdir -p "$MUSIC_DIR"
+mkdir -p "$MUSIC_DIR_MP3"
 
 # download
 echo "==> Downloading playlists..."
@@ -23,6 +25,7 @@ for url in $PLAYLISTS
     if [ "$argv[1]" != "--skip-download" ]
         echo "  -> $url"
         yt-dlp \
+            -vU \
             -f bestaudio \
             --extract-audio \
             --audio-format opus \
@@ -79,6 +82,7 @@ for url in $PLAYLISTS
         set match (find "$MUSIC_DIR" -name "*\[$id\]*" | head -1)
         if test -n "$match"
             set relative (string replace "$MUSIC_DIR/" "" $match)
+            set relative (string replace '.mp3' '.opus' $relative)
             echo $relative >> "$MUSIC_DIR/$playlist_id.m3u"
         end
     end < (python3 -c "
@@ -90,7 +94,11 @@ for url in $PLAYLISTS
             pass
     " | psub)
 
-    echo (set_color green)"  -> wrote $MUSIC_DIR/$playlist_id.m3u"(set_color normal)
+    set playlist_friendly_name (jq -s "first.playlist_title" /tmp/$playlist_id.json)
+
+    mv "$MUSIC_DIR/$playlist_id.m3u" "$MUSIC_DIR/$playlist_friendly_name.m3u"
+
+    echo (set_color green)"  -> wrote $MUSIC_DIR/$playlist_friendly_name.m3u"(set_color normal)
 end
 
 # sync to navidrome
@@ -104,8 +112,9 @@ rsync -av --progress \
     "$NAVIDROME_DIR"
 
 # generate mp3s
+echo "==> Converting Opus to MP3"
 find $MUSIC_DIR -name "*.opus" | parallel -j12 \
-    ffmpeg -i {} -c:a libmp3lame -q:a 2 -map_metadata 0 {.}.mp3
+    ffmpeg -i {} -hide_banner -loglevel quiet -c:a libmp3lame -q:a 2 -map_metadata 0 {.}.mp3
 
 # symlink mp3s for gta
 echo "==> Linking MP3s to GTA V Enhanced Self Radio..."
@@ -113,8 +122,10 @@ mkdir -p "$GTA_DIR"
 
 find "$MUSIC_DIR" -name "*.mp3" | while read -l mp3
     set link "$GTA_DIR/"(basename "$mp3")
+    set link_mp3 "$MUSIC_DIR_MP3/"(basename "$mp3")
     if not test -L "$link"
         ln -s "$mp3" "$link"
+        ln -s "$mp3" "$link_mp3"
         echo "  linked: "(basename "$mp3")
     end
 end
