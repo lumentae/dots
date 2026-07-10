@@ -20,7 +20,6 @@
 
   imports = [
     inputs.zen-browser.homeModules.twilight
-    (import ./overlays/default.nix)
   ];
 
   programs.zen-browser = {

@@ -9,10 +9,6 @@
     download-buffer-size = 524288000; # 500 MiB
   };
 
-  nixpkgs.overlays = [
-    (import ./overlays/idea-2026.1.nix)
-  ];
-
   # Kernel
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
