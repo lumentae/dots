@@ -8,8 +8,8 @@
     enable = true;
     gpu.nvidia = {
       enable = true;
-      version = "595.71.05";
-      sha256 = "sha256-NiA7iWC35JyKQva6H1hjzeNKBek9KyS3mK8G3YRva4I=";
+      version = "610.43.02";
+      sha256 = "sha256-MDSgVLtM33dS/43CclZMsQVROAS/9TU4lFkBsWyndGM=";
     };
   };
 
@@ -23,29 +23,29 @@
     (import ./overlays/default.nix)
   ];
 
-  #programs.zen-browser = {
-    #enable = true;
-    #setAsDefaultBrowser = true;
-  #};
-
-  programs.obs-studio = {
+  programs.zen-browser = {
     enable = true;
-
-    package = (
-      pkgs.obs-studio.override {
-        cudaSupport = true;
-      }
-    );
-
-    plugins = with pkgs.obs-studio-plugins; [
-      wlrobs
-      obs-backgroundremoval
-      obs-pipewire-audio-capture
-      obs-vaapi
-      obs-gstreamer
-      obs-vkcapture
-    ];
+    setAsDefaultBrowser = true;
   };
+
+  #programs.obs-studio = {
+    #enable = true;
+
+    #package = (
+      #pkgs.obs-studio.override {
+        #cudaSupport = true;
+      #}
+    #);
+
+    #plugins = with pkgs.obs-studio-plugins; [
+      #wlrobs
+      #obs-backgroundremoval
+      #obs-pipewire-audio-capture
+      #obs-vaapi
+      #obs-gstreamer
+      #obs-vkcapture
+    #];
+  #};
 
   programs.nh = {
     enable = true;
@@ -107,6 +107,7 @@
     unzip
     usbutils
     uv
+    quickshell
     vlc
     wayland
     wayland-utils
