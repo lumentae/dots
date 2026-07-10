@@ -39,7 +39,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: backgroundColor
+        color: root.backgroundColor
         radius: 12
     }
 
@@ -52,7 +52,7 @@ Item {
             id: prefix
             spacing: 4
             anchors.verticalCenter: parent.verticalCenter
-            visible: iconVisible
+            visible: root.iconVisible
         }
 
         Text {

@@ -21,10 +21,10 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         Pill {
             id: pill
-            text: `${mediaText}`
+            text: `${media.mediaText}`
             color: "white"
             position: posCenter;
-            iconVisible: mediaClass === "playing" || mediaClass === "paused"
+            iconVisible: media.mediaClass === "playing" || media.mediaClass === "paused"
             Item {
                 implicitWidth: 20
                 implicitHeight: 20
@@ -62,14 +62,14 @@ Item {
                             centerX: 10; centerY: 10
                             radiusX: 9; radiusY: 9
                             startAngle: -90
-                            sweepAngle: (mediaLength > 0) ? Math.min(360, Math.max(0, (mediaPosition / mediaLength * 360))) : 0
+                            sweepAngle: (media.mediaLength > 0) ? Math.min(360, Math.max(0, (media.mediaPosition / media.mediaLength * 360))) : 0
                         }
                     }
                 }
                 MaterialSymbol {
                     anchors.centerIn: parent
                     fill: 1
-                    text: (mediaClass === "playing") ? "music_note" : "pause"
+                    text: (media.mediaClass === "playing") ? "music_note" : "pause"
                     color: "white"
                 }
             }
