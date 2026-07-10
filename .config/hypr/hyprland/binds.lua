@@ -57,4 +57,4 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous & qs ipc call medi
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region -z"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("hyprpicker"))
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("~/.local/bin/hypruler/hypruler"))
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("hypruler"))
