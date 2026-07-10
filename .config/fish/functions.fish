@@ -14,11 +14,18 @@ function updatePearDesktop
 end
 
 function updateNvidiaDrivers
-    # TODO: Skip update if version is up to date
-    nvidia-smi | string match -r "Driver Version: (?<major>\d+)\.(?<minor>\d+)\.(?<revision>\d+)" > nul
+    nvidia-smi | string match -r "KMD Version: (?<major>\d+)\.(?<minor>\d+)\.(?<revision>\d+)" >nul
     echo "Updating to $major.$minor.$revision"
     set hash (nix store prefetch-file https://download.nvidia.com/XFree86/Linux-x86_64/$major.$minor.$revision/NVIDIA-Linux-x86_64-$major.$minor.$revision.run 2>&1 | grep -o 'sha256-[A-Za-z0-9+/=]*')
-    sed -i -E "s/version = \"[0-9]+\.[0-9]+\.[0-9]+\";/version = \"$major.$minor.$revision\";/;s/sha256 = \".+\";/sha256 = \"$hash\";/" ~/dots/nix/home.nix
     echo "New hash: $hash"
+    sed -i -E \
+        's/version = "[0-9]+\.[0-9]+\.[0-9]+";/version = "'"$major.$minor.$revision"'";/;s|sha256 = ".+";|sha256 = "'"$hash"'";|' \
+        ~/dots/nix/home.nix
     nr
+end
+
+function fixHyprland
+    hyprctl --instance 0 eval "hl.config({ misc = {allow_session_lock_restore = true}})"
+    hyprctl --instance 0 eval "hl.dispatch(hl.dsp.exec_cmd('hyprlock'))"
+    hyprctl --instance 0 dispatch 'hl.dsp.dpms({action="enable"})' 
 end
