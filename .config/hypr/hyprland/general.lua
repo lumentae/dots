@@ -25,17 +25,12 @@
 hl.config({
     general = {
         gaps_in  = 4,
-        gaps_out = { top = 4, left = 4, right = 4, bottom = 4 },
+        gaps_out = { top = 0, left = 4, right = 4, bottom = 4 },
 
         border_size = 2,
 
-        col = {
-            active_border   = { colors = {"rgba(F7DCDE39)"} },
-            inactive_border = "rgba(A58A8D30)",
-        },
-
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-        resize_on_border = false,
+        resize_on_border = true,
 
         -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing = false,
@@ -44,12 +39,12 @@ hl.config({
     },
 
     decoration = {
-        rounding       = 8,
-        rounding_power = 2,
+        rounding       = 0,
+        rounding_power = 0,
 
         -- Change transparency of focused and unfocused windows
-        active_opacity   = 0.9,
-        inactive_opacity = 0.9,
+        active_opacity   = 1, --0.9,
+        inactive_opacity = 1, --0.9,
 
         shadow = {
             enabled      = true,
@@ -146,5 +141,6 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        focus_on_activate       = true
     },
 })
