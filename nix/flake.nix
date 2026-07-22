@@ -20,31 +20,35 @@
       home-manager,
       ...
     }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
     {
-      nixosConfigurations.lumentae-nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          /etc/nixos/hardware-configuration.nix
-          ./configuration.nix
-          ./services
-          home-manager.nixosModules.default
-          {
-            home-manager = {
-              useGlobalPkgs = false;
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit inputs;
-              };
-              users.lumentae = ./home.nix;
-            };
-          }
-        ];
+      nixosConfigurations = {
+        lumentae-desktop = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hardware-configuration.nix
+            ./hosts/lumentae-desktop
+          ];
+        };
+
+        lumentae-laptop = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hardware-configuration.nix
+            ./hosts/lumentae-laptop
+          ];
+        };
       };
 
       homeConfigurations."lumentae-arch" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        inherit pkgs;
         extraSpecialArgs = { inherit inputs; };
-        modules = [ ./home.nix ];
+        modules = [ ./users/lumentae/home.nix ];
       };
     };
 }

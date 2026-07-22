@@ -2,16 +2,6 @@
 
 {
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.nvidia.acceptLicense = true;
-
-  targets.genericLinux = {
-    enable = true;
-    gpu.nvidia = {
-      enable = true;
-      version = "610.43.02";
-      sha256 = "sha256-MDSgVLtM33dS/43CclZMsQVROAS/9TU4lFkBsWyndGM=";
-    };
-  };
 
   home.username = "lumentae";
   home.homeDirectory = "/home/lumentae";
@@ -26,25 +16,6 @@
     enable = true;
     setAsDefaultBrowser = true;
   };
-
-  #programs.obs-studio = {
-    #enable = true;
-
-    #package = (
-      #pkgs.obs-studio.override {
-        #cudaSupport = true;
-      #}
-    #);
-
-    #plugins = with pkgs.obs-studio-plugins; [
-      #wlrobs
-      #obs-backgroundremoval
-      #obs-pipewire-audio-capture
-      #obs-vaapi
-      #obs-gstreamer
-      #obs-vkcapture
-    #];
-  #};
 
   programs.nh = {
     enable = true;
@@ -64,7 +35,7 @@
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-gnome
+      xdg-desktop-portal-hyprland
       xdg-desktop-portal-gtk
     ];
     config = {
@@ -78,40 +49,26 @@
 
   home.packages = with pkgs; [
     bibata-cursors
-    btop
     cascadia-code
     cliphist
-    code-cursor
-    easyeffects
     eza
     fastfetch
-    kdePackages.gwenview
-    hyprpaper
     hyprpicker
     hyprshot
-    iperf
-    jellyfin-rpc
-    jetbrains.clion
-    jetbrains.idea
-    jq
     libnotify
     mako
-    mangohud
-    material-symbols
-    moonlight-qt
     neovim
     playerctl
     pnpm
     starship
     unzip
-    usbutils
     uv
-    quickshell
-    vlc
     wayland
     wayland-utils
     wl-clipboard
     zip
+    material-symbols
+    quickshell
   ];
 
   fonts.fontconfig.enable = true;
