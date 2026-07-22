@@ -28,7 +28,7 @@ fi
 # --- Get git ---
 if ! command -v git &>/dev/null; then
   info "git not found — using nix-shell to clone"
-  GIT="nix --extra-experimental-features nix-command shell nixpkgs#git -c git"
+  GIT="nix --extra-experimental-features \"nix-command flakes\" shell nixpkgs#git -c git"
 else
   GIT="git"
 fi
