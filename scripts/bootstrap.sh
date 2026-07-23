@@ -55,7 +55,7 @@ fi
 HW_CONFIG="$NIX_DIR/hosts/$HOST/hardware-configuration.nix"
 if [ ! -f "$HW_CONFIG" ]; then
   info "Generating hardware configuration"
-  nixos-generate-config --dir "$NIX_DIR/hosts/$HOST"
+  nixos-generate-config --dir "$NIX_DIR/hosts/$HOST" --force
   "${GIT[@]}" -C "$DOTS" add "$HW_CONFIG"
 fi
 
