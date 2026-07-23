@@ -62,4 +62,9 @@ fi
 # --- Apply flake configuration ---
 info "Applying NixOS configuration"
 nixos-rebuild switch --flake "$NIX_DIR#$HOST" --show-trace
+
+# --- Change ownership ---
+info "Changing ownership of dots folder to lumentae"
+chown -R lumentae:lumentae $DOTS
+
 info "Bootstrap complete!"
