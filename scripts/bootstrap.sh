@@ -26,11 +26,16 @@ fi
 [ -f /etc/NIXOS ] || error "Not a live NixOS system"
 
 # --- Get git ---
-if ! command -v git &>/dev/null; then
-  info "git not found — using nix shell to clone"
-  GIT="env NIX_CONFIG='experimental-features = nix-command flakes' nix shell nixpkgs#git -c git"
+if command -v git &>/dev/null; then
+  GIT=(git)
 else
-  GIT="git"
+  NIX_BIN="$(command -v nix || echo /run/current-system/sw/bin/nix)"
+  if [[ ! -x "$NIX_BIN" ]]; then
+    error "nix binary not found at expected NixOS location ($NIX_BIN)"
+    exit 1
+  fi
+  info "git not found — using nix shell to run git"
+  GIT=(env NIX_CONFIG='experimental-features = nix-command flakes' "$NIX_BIN" shell nixpkgs#git -c git)
 fi
 
 # --- Clone/pull dots repo ---
@@ -39,11 +44,11 @@ NIX_DIR="$DOTS/nix"
 
 if [ -d "$NIX_DIR/.git" ]; then
   warn "Dotfiles already exist at $DOTS — pulling latest"
-  $GIT -C "$DOTS" pull
+  "${GIT[@]}" -C "$DOTS" pull
 else
   info "Cloning dotfiles to $DOTS"
   mkdir -p "$(dirname "$DOTS")"
-  $GIT clone --branch "$BRANCH" "$REPO" "$DOTS"
+  "${GIT[@]}" clone --branch "$BRANCH" "$REPO" "$DOTS"
 fi
 
 # --- Generate hardware config alongside the flake ---
