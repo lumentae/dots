@@ -7,7 +7,7 @@
     ../../modules/services
     ../../profiles/desktop
     ../../users/lumentae/user.nix
-    home-manager.nixosModules.default
+    inputs.home-manager.nixosModules.default
     {
       home-manager = {
         useGlobalPkgs = false;
