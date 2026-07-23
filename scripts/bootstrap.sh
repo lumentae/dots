@@ -52,10 +52,10 @@ else
 fi
 
 # --- Generate hardware config alongside the flake ---
-HW_CONFIG="$NIX_DIR/hardware-configuration.nix"
+HW_CONFIG="$NIX_DIR/hosts/$HOST/hardware-configuration.nix"
 if [ ! -f "$HW_CONFIG" ]; then
   info "Generating hardware configuration"
-  nixos-generate-config --dir "$NIX_DIR"
+  nixos-generate-config --dir "$NIX_DIR/hosts/$HOST"
 fi
 
 # --- Apply flake configuration ---
