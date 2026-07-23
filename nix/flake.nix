@@ -30,7 +30,7 @@
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
-            ./hardware-configuration.nix
+            ./hosts/lumentae-desktop/hardware-configuration.nix
             ./hosts/lumentae-desktop
           ];
         };
@@ -39,7 +39,7 @@
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
-            ./hardware-configuration.nix
+            ./hosts/lumentae-laptop/hardware-configuration.nix
             ./hosts/lumentae-laptop
           ];
         };
