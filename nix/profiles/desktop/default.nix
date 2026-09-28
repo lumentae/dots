@@ -7,8 +7,6 @@
     "nvidia_drm.modeset=1"
   ];
 
-  services.displayManager.ly.enable = true;
-
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {

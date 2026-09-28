@@ -18,22 +18,31 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
 
--- Switch workspaces with mainMod + [0-9]
--- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
-    hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
+
+    -- Focus or move active window to a workspace on the main monitor with mainMod + [0-9] (workspaces 1-10)
+    hl.bind(mainMod .. " + " .. key,               hl.dsp.focus({ workspace = i}))
+    hl.bind(mainMod .. " + SHIFT + " .. key,       hl.dsp.window.move({ workspace = i }))
+
+    -- Focus or move active window to a workspace on the secondary monitor with mainMod + ALT + [0-9]) (workspaces 11-20)
+    hl.bind(mainMod .. " + ALT + " .. key,         hl.dsp.focus({ workspace = i + 10, monitor = "desc:Acer Technologies ED320QR P 322503FF13W01" }))
+    hl.bind(mainMod .. " + SHIFT + ALT + " .. key, hl.dsp.window.move({ workspace = i + 10, monitor = "desc:Acer Technologies ED320QR P 322503FF13W01" }))
 end
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 
 -- Scroll through existing workspaces with mainMod + scroll
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "r-1" }))
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "r+1" }))
-hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(awk \"BEGIN {print $(hyprctl getoption cursor:zoom_factor | grep 'float:' | awk '{print $2}') - 0.5}\")"))
-hl.bind(mainMod .. " + SHIFT + mouse_up",   hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(awk \"BEGIN {print $(hyprctl getoption cursor:zoom_factor | grep 'float:' | awk '{print $2}') + 0.5}\")"))
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "r+1" }))
+hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "r-1" }))
+
+local function zoom(offset)
+    local current = hl.get_config("cursor.zoom_factor")
+    hl.config({ cursor = { zoom_factor = math.max(1.0, current + offset) } })
+end
+hl.bind(mainMod .. " + SHIFT + mouse_down", function() zoom(-0.5) end)
+hl.bind(mainMod .. " + SHIFT + mouse_up",   function() zoom(0.5) end)
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })

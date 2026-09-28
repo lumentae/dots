@@ -101,6 +101,8 @@
   services.flatpak.enable = true;
   services.blueman.enable = true;
 
+  services.displayManager.ly.enable = true;
+
   security.rtkit.enable = true;
 
   hardware.bluetooth.enable = true;

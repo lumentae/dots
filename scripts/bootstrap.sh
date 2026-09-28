@@ -26,11 +26,24 @@ fi
 [ -f /etc/NIXOS ] || error "Not a live NixOS system"
 
 # --- Get git ---
+<<<<<<< HEAD
 if ! command -v git &>/dev/null; then
   info "git not found — using nix-shell to clone"
   GIT="nix shell nixpkgs#git -c git"
 else
   GIT="git"
+=======
+if command -v git &>/dev/null; then
+  GIT=(git)
+else
+  NIX_BIN="$(command -v nix || echo /run/current-system/sw/bin/nix)"
+  if [[ ! -x "$NIX_BIN" ]]; then
+    error "nix binary not found at expected NixOS location ($NIX_BIN)"
+    exit 1
+  fi
+  info "git not found — using nix shell to run git"
+  GIT=(env NIX_CONFIG='experimental-features = nix-command flakes' "$NIX_BIN" shell nixpkgs#git -c git)
+>>>>>>> fc3b92b8dd63d8475b2c086747f24949b0b13457
 fi
 
 # --- Clone/pull dots repo ---
@@ -39,6 +52,7 @@ NIX_DIR="$DOTS/nix"
 
 if [ -d "$NIX_DIR/.git" ]; then
   warn "Dotfiles already exist at $DOTS — pulling latest"
+<<<<<<< HEAD
   $GIT -C "$DOTS" pull
 else
   info "Cloning dotfiles to $DOTS"
@@ -51,9 +65,32 @@ HW_CONFIG="$NIX_DIR/hardware-configuration.nix"
 if [ ! -f "$HW_CONFIG" ]; then
   info "Generating hardware configuration"
   nixos-generate-config --dir "$NIX_DIR"
+=======
+  "${GIT[@]}" -C "$DOTS" pull
+else
+  info "Cloning dotfiles to $DOTS"
+  mkdir -p "$(dirname "$DOTS")"
+  "${GIT[@]}" clone --branch "$BRANCH" "$REPO" "$DOTS"
+fi
+
+# --- Generate hardware config alongside the flake ---
+HW_CONFIG="$NIX_DIR/hosts/$HOST/hardware-configuration.nix"
+if [ ! -f "$HW_CONFIG" ]; then
+  info "Generating hardware configuration"
+  nixos-generate-config --dir "$NIX_DIR/hosts/$HOST" --force
+  "${GIT[@]}" -C "$DOTS" add "$HW_CONFIG"
+>>>>>>> fc3b92b8dd63d8475b2c086747f24949b0b13457
 fi
 
 # --- Apply flake configuration ---
 info "Applying NixOS configuration"
 nixos-rebuild switch --flake "$NIX_DIR#$HOST" --show-trace
+<<<<<<< HEAD
+=======
+
+# --- Change ownership ---
+info "Changing ownership of dots folder to lumentae"
+chown -R lumentae:lumentae $DOTS
+
+>>>>>>> fc3b92b8dd63d8475b2c086747f24949b0b13457
 info "Bootstrap complete!"

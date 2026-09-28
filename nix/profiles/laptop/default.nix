@@ -11,7 +11,6 @@
 
   hardware.cpu.intel.updateMicrocode = true;
   
-  networking.wireless.iwd.enable = true;
   services.avahi.enable = true;
 
   services.logind.lidSwitch = "suspend";

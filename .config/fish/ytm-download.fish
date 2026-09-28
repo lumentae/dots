@@ -12,7 +12,12 @@ set PLAYLISTS \
     "https://www.youtube.com/playlist?list=LM" \
     "https://www.youtube.com/playlist?list=PL-GgbkABINgXHrEwEdLxUGu7Qx3lStaVQ" \
     "https://www.youtube.com/playlist?list=PL-GgbkABINgWT14SsTvYDpK_OB6cWXb_v" \
-    "https://www.youtube.com/playlist?list=PL-GgbkABINgXMYYrt9fb2-Ksi4INfhASd"
+    "https://www.youtube.com/playlist?list=PL-GgbkABINgXMYYrt9fb2-Ksi4INfhASd" \
+    "https://www.youtube.com/playlist?list=PLcB-5VfaxzHk" \
+    "https://www.youtube.com/playlist?list=PLYorHuxrXY2I" \
+    "https://www.youtube.com/playlist?list=PLfETnzB4nkO8" \
+    "https://www.youtube.com/playlist?list=PLJ0TIh54wjsk" \
+    "https://www.youtube.com/playlist?list=PLCnVRprdYcL8"
 
 # setup
 mkdir -p "$MUSIC_DIR"
